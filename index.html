@@ -155,12 +155,91 @@
     }
     details summary:hover { text-decoration: underline; }
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .separator { border: none; border-top: 1px dashed var(--border); margin: 20px 0; }
+
+    /* ===== MOBILE ===== */
     @media (max-width: 768px) {
         .grid-2 { grid-template-columns: 1fr; }
         .toc { column-count: 1; }
-        body { padding: 10px; }
+        body { padding: 8px; font-size: 15px; }
+        h1 { font-size: 1.3em; }
+        h2 { font-size: 1.15em; }
+        .subtitle { font-size: 0.8em; }
+        .room { padding: 12px; margin: 10px 0; }
+        .room-name { font-size: 1.05em; }
+        .room-area { font-size: 0.75em; }
+
+        /* Nav: scrollable horizontal */
+        .nav {
+            padding: 8px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+        .nav br { display: none; }
+        .nav a { font-size: 0.78em; margin-right: 8px; }
+        .floor-label { font-size: 0.7em; padding: 2px 6px; }
+
+        /* Tables -> stacked cards on mobile */
+        table, thead, tbody, th, tr, td {
+            display: block;
+        }
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        tr {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 8px 0;
+            padding: 10px 12px;
+        }
+        td {
+            padding: 4px 0;
+            border: none;
+            position: relative;
+            padding-left: 0;
+            font-size: 0.88em;
+            line-height: 1.5;
+        }
+        /* First td = element name, make it prominent */
+        td:first-child {
+            font-weight: 700;
+            font-size: 0.95em;
+            padding-bottom: 6px;
+            margin-bottom: 4px;
+            border-bottom: 1px solid var(--border);
+        }
+        /* Label each field with ::before */
+        td:nth-child(2)::before { content: "Pozitie: "; color: var(--muted); font-weight: 600; font-size: 0.85em; }
+        td:nth-child(3)::before { content: "Inaltime: "; color: var(--muted); font-weight: 600; font-size: 0.85em; }
+        td:nth-child(4)::before { content: "Distanta: "; color: var(--muted); font-weight: 600; font-size: 0.85em; }
+        td:nth-child(5)::before { content: "Detalii: "; color: var(--muted); font-weight: 600; font-size: 0.85em; }
+        /* Make height value stand out */
+        td:nth-child(3) { color: var(--green); }
+
+        /* Summary tables (fewer columns) - keep simpler */
+        .grid-2 table tr { padding: 6px 10px; }
+        .grid-2 table td:nth-child(2)::before,
+        .grid-2 table td:nth-child(3)::before,
+        .grid-2 table td:nth-child(4)::before,
+        .grid-2 table td:nth-child(5)::before { content: none; }
+
+        /* Circuit table */
+        .circuit-table td:nth-child(2)::before { content: "Protectie: "; }
+        .circuit-table td:nth-child(3)::before { content: "Cablu: "; }
+        .circuit-table td:nth-child(4)::before { content: "Deserveste: "; }
+        .circuit-table td:nth-child(5)::before { content: none; }
+
+        /* Notes & warnings */
+        .note, .warning, .tip { font-size: 0.82em; padding: 8px 10px; }
+
+        /* Badge smaller on mobile */
+        .badge { font-size: 0.72em; padding: 2px 6px; }
     }
-    .separator { border: none; border-top: 1px dashed var(--border); margin: 20px 0; }
 </style>
 </head>
 <body>
