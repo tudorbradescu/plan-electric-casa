@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Electric - Casa Bradescu, Cristian, Sibiu</title>
+<style>
+    :root {
+        --bg: #0d1117;
+        --card: #161b22;
+        --border: #30363d;
+        --text: #e6edf3;
+        --muted: #8b949e;
+        --accent: #58a6ff;
+        --green: #3fb950;
+        --yellow: #d29922;
+        --orange: #db6d28;
+        --red: #f85149;
+        --purple: #bc8cff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    h1 { color: var(--accent); font-size: 1.8em; margin-bottom: 5px; }
+    h2 { color: var(--green); font-size: 1.4em; margin: 30px 0 15px; border-bottom: 2px solid var(--green); padding-bottom: 8px; }
+    h3 { color: var(--yellow); font-size: 1.15em; margin: 20px 0 10px; }
+    h4 { color: var(--purple); font-size: 1em; margin: 15px 0 8px; }
+    .subtitle { color: var(--muted); font-size: 0.95em; margin-bottom: 25px; }
+    .room {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 15px 0;
+    }
+    .room-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .room-name { color: var(--accent); font-size: 1.2em; font-weight: 700; }
+    .room-area {
+        background: #1f2937;
+        color: var(--muted);
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.85em;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 0.9em;
+    }
+    th {
+        background: #1f2937;
+        color: var(--accent);
+        padding: 8px 12px;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid var(--border);
+    }
+    td {
+        padding: 7px 12px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+    }
+    tr:hover td { background: rgba(88,166,255,0.05); }
+    .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.8em;
+        font-weight: 600;
+    }
+    .badge-priza { background: rgba(63,185,80,0.15); color: var(--green); }
+    .badge-intrerupator { background: rgba(210,153,34,0.15); color: var(--yellow); }
+    .badge-lumina { background: rgba(188,140,255,0.15); color: var(--purple); }
+    .badge-special { background: rgba(248,81,73,0.15); color: var(--red); }
+    .badge-exterior { background: rgba(219,109,40,0.15); color: var(--orange); }
+    .note {
+        background: rgba(210,153,34,0.1);
+        border-left: 3px solid var(--yellow);
+        padding: 10px 15px;
+        margin: 10px 0;
+        font-size: 0.9em;
+        border-radius: 0 6px 6px 0;
+    }
+    .warning {
+        background: rgba(248,81,73,0.1);
+        border-left: 3px solid var(--red);
+        padding: 10px 15px;
+        margin: 10px 0;
+        font-size: 0.9em;
+        border-radius: 0 6px 6px 0;
+    }
+    .tip {
+        background: rgba(63,185,80,0.1);
+        border-left: 3px solid var(--green);
+        padding: 10px 15px;
+        margin: 10px 0;
+        font-size: 0.9em;
+        border-radius: 0 6px 6px 0;
+    }
+    .nav {
+        position: sticky;
+        top: 0;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 10px 0;
+        z-index: 100;
+        margin-bottom: 20px;
+    }
+    .nav a {
+        color: var(--accent);
+        text-decoration: none;
+        margin-right: 12px;
+        font-size: 0.85em;
+        white-space: nowrap;
+    }
+    .nav a:hover { text-decoration: underline; }
+    .floor-label {
+        display: inline-block;
+        color: var(--bg);
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+        margin-right: 5px;
+    }
+    .floor-parter { background: var(--green); }
+    .floor-etaj { background: var(--purple); }
+    .floor-ext { background: var(--orange); }
+    .circuit-table td:first-child { font-weight: 600; color: var(--accent); }
+    .toc { column-count: 2; column-gap: 30px; }
+    .toc a { display: block; padding: 3px 0; color: var(--text); text-decoration: none; font-size: 0.9em; }
+    .toc a:hover { color: var(--accent); }
+    .perete { color: var(--muted); font-style: italic; }
+    details { margin: 8px 0; }
+    details summary {
+        cursor: pointer;
+        color: var(--accent);
+        font-weight: 600;
+        padding: 5px 0;
+    }
+    details summary:hover { text-decoration: underline; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    @media (max-width: 768px) {
+        .grid-2 { grid-template-columns: 1fr; }
+        .toc { column-count: 1; }
+        body { padding: 10px; }
+    }
+    .separator { border: none; border-top: 1px dashed var(--border); margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<h1>&#9889; Plan Electric - Casa Bradescu</h1>
+<p class="subtitle">Cristian, jud. Sibiu, str. XIV | P+1 | Suprafata utila: 205.08 mp | Proiect nr. 38/2024</p>
+
+<nav class="nav" id="top">
+    <span class="floor-label floor-parter">PARTER</span>
+    <a href="#p01">Hol</a>
+    <a href="#p02">Birou</a>
+    <a href="#p03">Baie+Spal</a>
+    <a href="#p04">Hol2</a>
+    <a href="#p05">Depozit</a>
+    <a href="#p06">Camara</a>
+    <a href="#p07">Bucatarie</a>
+    <a href="#p08">Living</a>
+    <a href="#p09">WC</a>
+    <a href="#p10">Garaj</a>
+    <br>
+    <span class="floor-label floor-etaj">ETAJ</span>
+    <a href="#e01">Scara</a>
+    <a href="#e02">Hol</a>
+    <a href="#e03">Depozit</a>
+    <a href="#e04">Dormitor1</a>
+    <a href="#e05">Baie1</a>
+    <a href="#e06">Dormitor2</a>
+    <a href="#e07">Dressing1</a>
+    <a href="#e08">Dormitor3</a>
+    <a href="#e09">Dressing2</a>
+    <a href="#e10">Baie2</a>
+    <br>
+    <span class="floor-label floor-ext">EXTERIOR</span>
+    <a href="#ext">Terasa+Balcoane</a>
+    <a href="#tablou">Tablou</a>
+    <a href="#reguli">Reguli</a>
+    <a href="#circuite">Circuite</a>
+</nav>
+
+<!-- ============================================================ -->
+<!-- REGULI GENERALE -->
+<!-- ============================================================ -->
+<h2 id="reguli">Reguli Generale & Inaltimi Standard</h2>
+
+<div class="room">
+<h3>Inaltimi de montaj (de la pardoseala finita)</h3>
+<table>
+    <tr><th>Element</th><th>Inaltime standard</th><th>Observatii</th></tr>
+    <tr><td>Prize normale</td><td><strong>30 cm</strong> (centru doza)</td><td>Masurat de la pardoseala finita la centrul dozei</td></tr>
+    <tr><td>Prize bucatarie (blat)</td><td><strong>110 cm</strong></td><td>15 cm deasupra blatului de lucru (blat la ~95 cm)</td></tr>
+    <tr><td>Prize hota</td><td><strong>200 cm</strong> sau in mobilier</td><td>Ascunsa in spatele hotei</td></tr>
+    <tr><td>Prize masina spalat / uscator</td><td><strong>110 cm</strong></td><td>Accesibila, nu in spatele masinii</td></tr>
+    <tr><td>Prize baie (oglinda)</td><td><strong>110-120 cm</strong></td><td>Langa oglinda, min 60cm de cada/dus, IP44</td></tr>
+    <tr><td>Intrerupatoare</td><td><strong>110 cm</strong></td><td>La 15-20 cm de tocul usii, pe partea manerului</td></tr>
+    <tr><td>Intrerupator pat (aplica)</td><td><strong>60-70 cm</strong> de la podea / <strong>10-15 cm</strong> deasupra noptiera</td><td>Accesibil din pat</td></tr>
+    <tr><td>Prize pat (noptiera)</td><td><strong>30 cm</strong> sau <strong>60-70 cm</strong></td><td>30cm = sub noptiera; 60-70cm = deasupra noptiera (mai practic)</td></tr>
+    <tr><td>Prize TV</td><td><strong>110-120 cm</strong> (perete) sau <strong>30 cm</strong> (comoda)</td><td>Depinde daca TV e pe perete sau pe comoda</td></tr>
+    <tr><td>Tablou electric</td><td><strong>150-170 cm</strong> (partea superioara)</td><td>Accesibil, nu in spatele usilor</td></tr>
+    <tr><td>Termostat</td><td><strong>150 cm</strong></td><td>Perete interior, departe de surse de caldura</td></tr>
+</table>
+
+<h3>Distante minime obligatorii</h3>
+<table>
+    <tr><th>Regula</th><th>Distanta</th></tr>
+    <tr><td>Priza / intrerupator fata de coltul camerei</td><td>min. <strong>15 cm</strong></td></tr>
+    <tr><td>Priza / intrerupator fata de tocul usii</td><td>min. <strong>15 cm</strong></td></tr>
+    <tr><td>Priza fata de chiuveta / cada (zona 2 baie)</td><td>min. <strong>60 cm</strong></td></tr>
+    <tr><td>Intrerupator fata de cada/dus</td><td>min. <strong>60 cm</strong></td></tr>
+    <tr><td>Priza fata de plita/aragaz</td><td>min. <strong>30 cm</strong> lateral</td></tr>
+    <tr><td>Priza fata de pardoseala in baie</td><td>min. <strong>25 cm</strong> (recomandat 110cm)</td></tr>
+    <tr><td>Cabluri fata de tevi apa/gaz</td><td>min. <strong>5 cm</strong> paralel, <strong>3 cm</strong> la intersectie</td></tr>
+</table>
+
+<h3>Zone electrice baie (NTE 007 / IEC 60364-7-701)</h3>
+<table>
+    <tr><th>Zona</th><th>Delimitare</th><th>Ce e permis</th></tr>
+    <tr><td><strong>Zona 0</strong></td><td>Interiorul cazii / cadita dus</td><td>Nimic (max SELV 12V)</td></tr>
+    <tr><td><strong>Zona 1</strong></td><td>Deasupra cazii/dusului, pana la 2.25m inaltime</td><td>Doar boiler, IP X5</td></tr>
+    <tr><td><strong>Zona 2</strong></td><td>60 cm in jurul Zonei 1</td><td>Corp iluminat IP X4, priza cu transformator separare</td></tr>
+    <tr><td><strong>Zona 3</strong></td><td>Restul baii (pana la 2.40m de Zona 1)</td><td>Prize IP X1 cu RCBO 30mA, corpuri iluminat IP X1</td></tr>
+</table>
+
+<div class="warning"><strong>OBLIGATORIU:</strong> Toate circuitele din baie pe diferential 30mA (RCBO). Toate prizele din baie minim IP44. Legatura echipotentiala suplimentara obligatorie in fiecare baie (leaga toate elementele metalice: tevi, cada, radiator, la bara PE).</div>
+
+<div class="note"><strong>Inaltime camera:</strong> 2.75m (parter si etaj) | 2.45m (garaj) | Pereti structurali: 25cm caramida | Pereti despartitori: 12.5cm | Incalzire in pardoseala pe ambele niveluri - <strong>ATENTIE la trasee cabluri in sapa!</strong></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TABLOU ELECTRIC -->
+<!-- ============================================================ -->
+<h2 id="tablou">Tablou Electric General</h2>
+
+<div class="room">
+<h3>Locatie tablou principal</h3>
+<p><strong>Recomandat:</strong> Holul de intrare (P.01), perete langa usa de intrare, la inaltime 150-170cm (partea superioara). Accesibil imediat la intrarea in casa.</p>
+
+<div class="tip"><strong>Recomandare:</strong> Tablou de min. 36 module (3 randuri x 12 module) pentru flexibilitate. La casa cu 20 camere si garaj, ai nevoie de minim 24-30 module ocupate.</div>
+
+<h3>Tablou secundar etaj (optional dar recomandat)</h3>
+<p><strong>Locatie:</strong> Holul etajului (E.02), alimentat din tabloul principal printr-un cablu 3x6mm². Reduce lungimea traseelor si caderea de tensiune.</p>
+
+<h3 id="circuite">Repartizare circuite recomandata</h3>
+<table class="circuit-table">
+    <tr><th>Circuit</th><th>Protectie</th><th>Cablu</th><th>Deserveste</th></tr>
+    <tr><td>C1 - Iluminat Parter</td><td>10A / curba B + Dif 30mA</td><td>3x1.5mm² NYM</td><td>Toate luminile parter (fara baie)</td></tr>
+    <tr><td>C2 - Iluminat Etaj</td><td>10A / curba B + Dif 30mA</td><td>3x1.5mm² NYM</td><td>Toate luminile etaj (fara bai)</td></tr>
+    <tr><td>C3 - Prize Parter</td><td>16A / curba C + Dif 30mA</td><td>3x2.5mm² NYM</td><td>Prize living, birou, holuri</td></tr>
+    <tr><td>C4 - Prize Etaj</td><td>16A / curba C + Dif 30mA</td><td>3x2.5mm² NYM</td><td>Prize dormitoare, holuri, dressing</td></tr>
+    <tr><td>C5 - Bucatarie prize blat</td><td>16A / curba C + Dif 30mA</td><td>3x2.5mm² NYM</td><td>Prize deasupra blatului</td></tr>
+    <tr><td>C6 - Bucatarie electrocasnice mari</td><td>16A / curba C + Dif 30mA</td><td>3x2.5mm² NYM</td><td>Frigider, masina spalat vase</td></tr>
+    <tr><td>C7 - Cuptor electric</td><td>20A / curba C + Dif 30mA</td><td>3x4mm² NYM</td><td>Cuptor (daca e electric)</td></tr>
+    <tr><td>C8 - Plita electrica</td><td>32A / curba C + Dif 30mA</td><td>5x6mm² NYM</td><td>Plita inductie/vitroceramica (daca e cazul)</td></tr>
+    <tr><td>C9 - Baie parter (P.03)</td><td>16A / curba C + RCBO 30mA</td><td>3x2.5mm² NYM</td><td>Prize + lumini baie + spalatorie parter</td></tr>
+    <tr><td>C10 - Baie etaj 1 (E.05)</td><td>16A / curba C + RCBO 30mA</td><td>3x2.5mm² NYM</td><td>Prize + lumini baie etaj 1</td></tr>
+    <tr><td>C11 - Baie etaj 2 (E.10)</td><td>16A / curba C + RCBO 30mA</td><td>3x2.5mm² NYM</td><td>Prize + lumini baie etaj 2</td></tr>
+    <tr><td>C12 - WC parter (P.09)</td><td>16A / curba C + RCBO 30mA</td><td>3x2.5mm² NYM</td><td>Prize + lumini WC parter</td></tr>
+    <tr><td>C13 - Masina spalat + uscator</td><td>16A / curba C + Dif 30mA</td><td>3x2.5mm² NYM</td><td>Masina spalat rufe + uscator (P.03)</td></tr>
+    <tr><td>C14 - Garaj</td><td>16A / curba C + Dif 30mA</td><td>3x2.5mm² NYM</td><td>Prize + lumini garaj</td></tr>
+    <tr><td>C15 - Exterior</td><td>16A / curba C + Dif 30mA</td><td>3x2.5mm² NYM</td><td>Iluminat terasa, balcoane, acces</td></tr>
+    <tr><td>C16 - Centrala termica</td><td>16A / curba C + Dif 30mA</td><td>3x2.5mm² NYM</td><td>Centrala termica (circuit dedicat)</td></tr>
+    <tr><td>C17 - Semineu</td><td>10A / curba B</td><td>3x1.5mm² NYM</td><td>Ventilator semineu pe lemne (daca exista)</td></tr>
+    <tr><td>C18 - Alimentare tablou etaj</td><td>40A / curba C</td><td>3x6mm² NYM</td><td>Tablou secundar etaj</td></tr>
+    <tr><td>C19 - Rezerva 1</td><td>-</td><td>-</td><td>Aer conditionat / pompa caldura viitor</td></tr>
+    <tr><td>C20 - Rezerva 2</td><td>-</td><td>-</td><td>Statie incarcare auto / panouri solare</td></tr>
+</table>
+
+<div class="tip"><strong>Recomandare viitor:</strong> Trage tub gol de la tablou pana in garaj (pentru statie incarcare EV - minim tub 32mm) si pana la acoperis (pentru panouri fotovoltaice). Costa putin acum si economiseste mult mai tarziu.</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PARTER -->
+<!-- ============================================================ -->
+<h2>PARTER (Cota +/-0.00, H util = 2.75m)</h2>
+
+<!-- P.01 HOL INTRARE -->
+<div class="room" id="p01">
+<div class="room-header">
+    <span class="room-name">P.01 - Hol Intrare</span>
+    <span class="room-area">7.48 mp | ~2.80 x 2.67m | Pardoseala: gresie</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Lumina hol</td>
+    <td>Perete langa usa intrare, partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de tocul usii</td>
+    <td>Cap-scara cu intrerupatorul de la scara (E.01). Comutator dublu daca ai 2 corpuri de iluminat</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Generala 1</td>
+    <td>Perete opus usii de intrare</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Pentru aspirator, incaltaminte electrica, etc.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Generala 2</td>
+    <td>Perete lateral (sub tablou sau langa cuier)</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>De rezerva</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">TABLOU ELECTRIC</span> Principal</td>
+    <td>Perete accesibil, nu in spatele usii</td>
+    <td><strong>150-170 cm</strong> (sus)</td>
+    <td>Min 70 cm spatiu liber in fata</td>
+    <td>Tablou 36 module, 3 randuri. Cablu alimentare 3x10mm² de la contor exterior</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">TERMOSTAT</span> Incalzire pardoseala</td>
+    <td>Perete interior (nu exterior!)</td>
+    <td><strong>150 cm</strong></td>
+    <td>Departe de usa exterioara si ferestre</td>
+    <td>Termostat zona parter. Senzor de pardoseala in sapa.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong> (tavan)</td>
+    <td>Centru geometric camera</td>
+    <td>LED 18-24W, lumina calda 3000K. Doza tavan + suport</td>
+</tr>
+</table>
+<div class="note">Holul este zona de tranzit intensa. Intrerupatorul trebuie accesibil imediat la deschiderea usii. Prevede si priza USB langa intrare pentru incarcare telefon.</div>
+</div>
+
+<!-- P.02 BIROU -->
+<div class="room" id="p02">
+<div class="room-header">
+    <span class="room-name">P.02 - Birou (Office)</span>
+    <span class="room-area">11.40 mp | ~3.00 x 3.80m | Pardoseala: parchet</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Lumina principala</td>
+    <td>Perete langa usa, partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de tocul usii</td>
+    <td>Simplu sau cu variator (dimmer) pentru iluminat ambiant</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x4</span> Zona birou</td>
+    <td>Peretele unde va fi biroul (de preferat perete interior)</td>
+    <td><strong>30 cm</strong> (sub birou) sau <strong>75 cm</strong> (deasupra biroului)</td>
+    <td>Centrate pe zona de lucru, la fiecare 50-60 cm</td>
+    <td>PC, monitor, imprimanta, lampa. <strong>Minimum 4 prize grupate</strong> (2 prize duble)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Date/Retea</td>
+    <td>Langa prizele de birou</td>
+    <td><strong>30 cm</strong></td>
+    <td>Adiacent prizelor electrice</td>
+    <td>Priza RJ45 Cat6A. Trage cablu UTP de la router</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete opus</td>
+    <td>Peretele opus biroului</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Aspirator, incalzitor auxiliar, etc.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span> Principala</td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru geometric</td>
+    <td>LED 24-36W, lumina neutra 4000K. Birou necesita 500 lux!</td>
+</tr>
+</table>
+<div class="tip"><strong>Best practice birou:</strong> Nivelul de iluminare recomandat: 500 lux (NP-061-02). Prevede circuit separat pentru prize birou daca ai echipamente sensibile. Adauga si o priza cu USB integrat.</div>
+</div>
+
+<!-- P.03 BAIE + SPALATORIE -->
+<div class="room" id="p03">
+<div class="room-header">
+    <span class="room-name">P.03 - Baie + Spalatorie</span>
+    <span class="room-area">10.00 mp | ~3.30 x 3.00m | Pardoseala: gresie | Pereti: faianta</span>
+</div>
+
+<div class="warning"><strong>ZONA UMEDA!</strong> Toate prizele: minim IP44. Tot circuitul pe RCBO 30mA dedicat (C9). Legatura echipotentiala suplimentara obligatorie. Respecta zonele 0/1/2/3!</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Lumina</td>
+    <td><strong>IN EXTERIOR</strong>, langa usa pe hol, partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de tocul usii</td>
+    <td>Dublu: 1 pt plafoniera + 1 pt iluminat oglinda. Montat PE AFARA!</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span> Oglinda</td>
+    <td>Langa oglinda lavoar, Zona 3</td>
+    <td><strong>110-120 cm</strong></td>
+    <td><strong>Min 60 cm</strong> de marginea cazii/dusului</td>
+    <td>IP44, pentru uscator par, aparat ras. Cu capac.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span> Masina spalat rufe</td>
+    <td>Peretele masinii de spalat</td>
+    <td><strong>110 cm</strong></td>
+    <td>Lateral, nu in spatele masinii (accesibila!)</td>
+    <td>Circuit dedicat C13, 16A. Masina de spalat consuma 2000-2500W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span> Uscator rufe</td>
+    <td>Peretele uscatorului (langa/deasupra masina spalat)</td>
+    <td><strong>110 cm</strong> sau <strong>200 cm</strong> daca uscatorul e deasupra</td>
+    <td>Lateral, accesibila</td>
+    <td>Circuit dedicat C13 sau separat. Uscatorul: 2000-2500W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span> Boiler (daca exista)</td>
+    <td>Langa boiler, Zona 1-2</td>
+    <td><strong>200 cm</strong></td>
+    <td>Min 30 cm de boiler</td>
+    <td>Circuit separat daca boiler e >2000W. IPX5 daca in Zona 1</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA IP44</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru camera, in afara Zonei 1</td>
+    <td>LED IP44, 18-24W, lumina neutra 4000K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICA OGLINDA</span></td>
+    <td>Deasupra oglinzii lavoar</td>
+    <td><strong>200 cm</strong></td>
+    <td>Centrat pe oglinda</td>
+    <td>LED IP44, 8-12W. Alimentare din spatele oglinzii</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">VENTILATOR</span> Evacuare</td>
+    <td>Perete exterior sau tavan</td>
+    <td><strong>240-260 cm</strong></td>
+    <td>Cat mai departe de usa (flux aer)</td>
+    <td>100-120mm, cu timer. Conectat la intrerupator lumina sau separat</td>
+</tr>
+</table>
+<div class="note"><strong>Legatura echipotentiala:</strong> Conecteaza cu conductor 4mm² galben-verde: cada metalica, tevi apa calda/rece, radiator/portprosop, bara PE din tablou. Cutia de conexiune echipotentiala: perete, inaltime 30cm, accesibila.</div>
+</div>
+
+<!-- P.04 HOL SECUNDAR -->
+<div class="room" id="p04">
+<div class="room-header">
+    <span class="room-name">P.04 - Hol Secundar (tranzit)</span>
+    <span class="room-area">3.37 mp | ~1.50 x 2.25m | Pardoseala: parchet</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Lumina</td>
+    <td>Langa usa de acces, partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Cap-scara daca holul are 2 accese</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span></td>
+    <td>Orice perete liber</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>1 priza dubla pt aspirator</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">SPOT / PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED 12W, lumina calda 3000K</td>
+</tr>
+</table>
+</div>
+
+<!-- P.05 DEPOZITARE -->
+<div class="room" id="p05">
+<div class="room-header">
+    <span class="room-name">P.05 - Depozitare (debara parter)</span>
+    <span class="room-area">2.62 mp | ~1.30 x 2.00m | Pardoseala: gresie</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Exterior, langa usa</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Simplu, montat in exterior pe hol</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span></td>
+    <td>Perete lateral</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>1 priza simpla (aspirator, dezumidificator)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED 12W</td>
+</tr>
+</table>
+</div>
+
+<!-- P.06 CAMARA -->
+<div class="room" id="p06">
+<div class="room-header">
+    <span class="room-name">P.06 - Camara (pantry)</span>
+    <span class="room-area">5.50 mp | ~2.20 x 2.50m | Pardoseala: gresie</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Langa usa, partea manerului (interior sau exterior)</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Simplu</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> 1</td>
+    <td>Perete la inaltime blat</td>
+    <td><strong>110 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Pentru robot bucatarie, blender, etc. (daca camara e conectata la bucatarie)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> 2</td>
+    <td>Perete, jos</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Congelator lada (daca e cazul)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED 12-18W, lumina neutra 4000K</td>
+</tr>
+</table>
+</div>
+
+<!-- P.07 BUCATARIE -->
+<div class="room" id="p07">
+<div class="room-header">
+    <span class="room-name">P.07 - Bucatarie</span>
+    <span class="room-area">11.25 mp | ~3.00 x 3.75m | Pardoseala: gresie | Pereti: faianta pe zona blat</span>
+</div>
+
+<div class="warning"><strong>CAMERA CU CEL MAI MARE CONSUM!</strong> Bucataria necesita minim 3-4 circuite dedicate. Plita inductie singura poate consuma 7000W (32A). Nu pune totul pe un singur circuit!</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Lumina tavan</td>
+    <td>Langa usa, partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Poate fi dublu: tavan + lumina sub corpuri suspendate</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x4</span> Blat zona 1</td>
+    <td>Peretele cu blat, <strong>intre corpuri inferioare si superioare</strong></td>
+    <td><strong>110 cm</strong></td>
+    <td><strong>Min 30 cm lateral</strong> de plita; min 30 cm de chiuveta</td>
+    <td>2 prize duble (4 prize). Circuit C5. Mixer, toaster, cafetiera, etc.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Blat zona 2</td>
+    <td>Celalalt capat al blatului</td>
+    <td><strong>110 cm</strong></td>
+    <td>Min 30 cm de plita/chiuveta</td>
+    <td>1 priza dubla. Circuit C5.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">PRIZA</span> Plita electrica</td>
+    <td>In spatele/sub plita, in dulapul de dedesubt</td>
+    <td><strong>10-15 cm</strong> (in dulap) sau <strong>30 cm</strong></td>
+    <td>Centrat pe plita, accesibil</td>
+    <td><strong>Circuit dedicat C8: 32A, cablu 5x6mm².</strong> Doza de conexiune, nu priza! Plita inductie: 6000-7400W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">PRIZA</span> Cuptor electric</td>
+    <td>In dulapul inalt, in spatele cuptorului</td>
+    <td><strong>30-60 cm</strong> (in dulap) sau la inaltimea cuptorului</td>
+    <td>Accesibila lateral</td>
+    <td><strong>Circuit dedicat C7: 20A, cablu 3x4mm².</strong> Cuptor: 2500-3500W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Frigider</td>
+    <td>Peretele din spatele frigiderului</td>
+    <td><strong>30 cm</strong> sau <strong>200 cm</strong> (deasupra, accesibila)</td>
+    <td>Centrat pe frigider</td>
+    <td>Circuit C6. Frigider: 100-200W (continuu)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Masina spalat vase</td>
+    <td>In dulapul de sub chiuveta</td>
+    <td><strong>30-40 cm</strong> (in dulap)</td>
+    <td>Lateral, accesibila (nu direct in spatele masinii)</td>
+    <td>Circuit C6. Masina spalat vase: 1800-2400W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Hota</td>
+    <td>Deasupra corpurilor suspendate / in spatele hotei</td>
+    <td><strong>200-210 cm</strong></td>
+    <td>Centrat pe hota</td>
+    <td>Ascunsa in corpul suspendat sau deasupra. Hota: 200-400W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Microunde</td>
+    <td>In corpul suspendat sau pe blat</td>
+    <td><strong>110 cm</strong> (blat) sau <strong>140 cm</strong> (raft)</td>
+    <td>Langa pozitia microundelor</td>
+    <td>Circuit C5 sau C6. Microunde: 1000-1500W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span> Principala</td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru geometric</td>
+    <td>LED 24-36W, lumina neutra 4000K. Iluminare: 300-500 lux</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">LED STRIP</span> Sub corpuri</td>
+    <td>Sub corpurile suspendate, spre blat</td>
+    <td><strong>~160 cm</strong> (sub corp)</td>
+    <td>Pe toata lungimea blatului</td>
+    <td>LED strip 12-24V cu transformator. Ilumineaza suprafata de lucru</td>
+</tr>
+</table>
+
+<div class="tip"><strong>Sfat important:</strong> Stabileste ACUM configuratia exacta a mobilierului de bucatarie (forma L, U, I, insula) si pozitia chiuvetei, plitei, frigiderului. Pozitia prizelor depinde 100% de mobilier. Cere proiectul de mobilier de la furnizor INAINTE de trasarea electrica.</div>
+</div>
+
+<!-- P.08 LIVING + DINING -->
+<div class="room" id="p08">
+<div class="room-header">
+    <span class="room-name">P.08 - Living + Dining</span>
+    <span class="room-area">32.62 mp | ~5.80 x 5.60m | Pardoseala: parchet</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Principal</td>
+    <td>Langa usa de acces din hol, partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Cap-scara cu intrerupator secundar (la cealalta intrare, daca exista). Recomandat: <strong>dimmer</strong> pt ambiant</td>
+</tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Secundar (daca 2 accese)</td>
+    <td>Langa al doilea acces (spre terasa)</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Cap-scara cu intrerupatorul principal</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Zona TV</td>
+    <td>Peretele TV</td>
+    <td><strong>120 cm</strong> (TV pe perete) sau <strong>30 cm</strong> (comoda TV)</td>
+    <td>Centrat pe pozitia TV-ului</td>
+    <td>2 prize duble (4 prize): TV, soundbar, media player, consola. + priza RJ45 + priza coax/SAT</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Zona canapea</td>
+    <td>Peretele din spatele canapelei, la fiecare capat</td>
+    <td><strong>30 cm</strong></td>
+    <td>La 30-50 cm de capetele canapelei</td>
+    <td>Lampa, incarcator telefon. 1 priza dubla la fiecare capat</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Zona dining</td>
+    <td>Peretele cel mai aproape de masa</td>
+    <td><strong>30 cm</strong></td>
+    <td>Sub masa sau lateral</td>
+    <td>1 priza dubla: incarcator, aspirator</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Zona semineu</td>
+    <td>Langa semineu (nu in spatele lui!)</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 50 cm lateral de semineu</td>
+    <td>Pentru ventilator semineu, aparat de masurat CO. Circuit C17 daca semineu are ventilator</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete liber 1</td>
+    <td>Perete lateral liber</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Rezerva: lampa, aspirator, brad Craciun, etc.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete liber 2</td>
+    <td>Alt perete lateral</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Rezerva</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Podea (optional)</td>
+    <td>Centrul camerei (in pardoseala)</td>
+    <td><strong>0 cm</strong> (in podea)</td>
+    <td>Sub masa de dining sau langa canapea</td>
+    <td>Priza de pardoseala IP44 cu capac. Utila daca masa e la centrul camerei. Se monteaza INAINTE de sapa!</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">TERMOSTAT</span></td>
+    <td>Perete interior, zona living</td>
+    <td><strong>150 cm</strong></td>
+    <td>Departe de fereastra, usa terasa, semineu</td>
+    <td>Termostat zona living (daca e zona separata de hol)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">LUSTRA / PLAFONIERA</span> Living</td>
+    <td>Centrul zonei living</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centrat pe zona canapea-TV</td>
+    <td>LED 36-48W, dimabil, lumina calda 2700-3000K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">LUSTRA</span> Dining</td>
+    <td>Deasupra mesei de dining</td>
+    <td><strong>275 cm</strong> (doza) / <strong>~180 cm</strong> (corp, ajustabil)</td>
+    <td>Centrat pe masa</td>
+    <td>Pendul sau lustra. Doza de tavan separata de living. LED 24W, dimabila</td>
+</tr>
+</table>
+
+<div class="note"><strong>Living 32mp</strong> = camera mare. Prevede minim 2 circuite de iluminat separate (zona living + zona dining) controlate independent. La o camera de aceasta marime, ai nevoie de minim 8-10 prize distribuite uniform pe pereti (regula: 1 priza la fiecare 4mp perete).</div>
+</div>
+
+<!-- P.09 WC / S.T. -->
+<div class="room" id="p09">
+<div class="room-header">
+    <span class="room-name">P.09 - Grup Sanitar (WC)</span>
+    <span class="room-area">6.27 mp | ~2.10 x 3.00m | Pardoseala: gresie</span>
+</div>
+
+<div class="warning"><strong>ZONA UMEDA!</strong> Circuit dedicat C12 pe RCBO 30mA. Prize IP44.</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td><strong>IN EXTERIOR</strong>, pe hol, langa usa</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Dublu: lumina + ventilator. Montat PE AFARA!</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span></td>
+    <td>Langa lavoar, Zona 3</td>
+    <td><strong>110 cm</strong></td>
+    <td>Min 60 cm de orice sursa de apa</td>
+    <td>1 priza IP44 cu capac</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA IP44</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED IP44, 12W, lumina neutra</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICA OGLINDA</span></td>
+    <td>Deasupra oglinzii</td>
+    <td><strong>200 cm</strong></td>
+    <td>Centrat pe oglinda</td>
+    <td>LED IP44, 8W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">VENTILATOR</span></td>
+    <td>Perete exterior sau tavan</td>
+    <td><strong>240-260 cm</strong></td>
+    <td>Opus usi (flux aer)</td>
+    <td>100mm, cu timer 5 min dupa oprire lumina</td>
+</tr>
+</table>
+</div>
+
+<!-- P.10 GARAJ -->
+<div class="room" id="p10">
+<div class="room-header">
+    <span class="room-name">P.10 - Garaj</span>
+    <span class="room-area">18.19 mp | ~3.50 x 5.20m | Pardoseala: beton elicopterat | H: 2.45m</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Lumina</td>
+    <td>Langa usa acces din casa (interior garaj)</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Dublu: lumina principala + lumina suplimentara zona lucru</td>
+</tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Usa garaj</td>
+    <td>Langa usa acces auto (interior garaj) SAU langa usa casa</td>
+    <td><strong>110 cm</strong></td>
+    <td>Vizibil de la usa principala</td>
+    <td>Buton actionare usa automata garaj (daca e cazul)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete stanga 1</td>
+    <td>Perete lateral stanga</td>
+    <td><strong>110 cm</strong></td>
+    <td>La 1/3 din lungime</td>
+    <td>Bormasina, polizor, compressor</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete stanga 2</td>
+    <td>Perete lateral stanga</td>
+    <td><strong>110 cm</strong></td>
+    <td>La 2/3 din lungime</td>
+    <td>Scule electrice</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete fund</td>
+    <td>Peretele din fundul garajului</td>
+    <td><strong>110 cm</strong></td>
+    <td>Centrat</td>
+    <td>Congelator lada, scule</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Usa motorizata</td>
+    <td>Perete/tavan langa motorul usii garaj</td>
+    <td><strong>230-240 cm</strong></td>
+    <td>Langa motorul usii automate</td>
+    <td>Priza dedicata motor usa garaj. Cablu tras de la montaj!</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">PRIZA</span> Statie incarcare EV (pregatire)</td>
+    <td>Peretele cel mai apropiat de locul de parcare</td>
+    <td><strong>100-120 cm</strong></td>
+    <td>Accesibila din masina</td>
+    <td><strong>TRAGE TUB GOL 32mm + cablu 5x6mm² de la tablou!</strong> Circuit dedicat rezerva C19. Wallbox viitor: 7.4-22kW</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">PRIZA</span> Centrala termica</td>
+    <td>Peretele centralei (daca centrala e in garaj)</td>
+    <td><strong>30 cm</strong></td>
+    <td>Lateral de centrala, accesibila</td>
+    <td><strong>Circuit dedicat C16.</strong> Centrala termica pe gaz: 100-200W, dar necesita circuit separat</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">CORP ILUMINAT</span> Principal</td>
+    <td>Tavan, centru</td>
+    <td><strong>245 cm</strong></td>
+    <td>Centrat pe garaj</td>
+    <td>2x LED liniar 120cm, 36W fiecare. IP44 (praf). Lumina rece 5000-6500K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">CORP ILUMINAT</span> Zona lucru</td>
+    <td>Tavan sau perete, deasupra bancului de lucru</td>
+    <td><strong>200 cm</strong></td>
+    <td>Centrat pe zona de lucru</td>
+    <td>LED 36W, lumina neutra 4000K</td>
+</tr>
+</table>
+
+<div class="tip"><strong>Garaj - prize la 110cm!</strong> In garaj prizele se monteaza la 110cm (nu 30cm ca in casa) pentru a fi accesibile si protejate de umezeala/murdarie de pe podea. Prizele de garaj la 30cm se inunda la spalarea masinii.</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ETAJ -->
+<!-- ============================================================ -->
+<h2>ETAJ (Cota +3.05m, H util = 2.75m)</h2>
+
+<!-- E.01 CASA SCARII -->
+<div class="room" id="e01">
+<div class="room-header">
+    <span class="room-name">E.01 - Casa Scarii</span>
+    <span class="room-area">5.28 mp | ~2.40 x 2.20m | Pardoseala: parchet</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Cap-scara (sus)</td>
+    <td>La iesirea din scara spre holul etajului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de marginea zidului</td>
+    <td><strong>Cap-scara cu P.01 (hol parter)!</strong> Apesi jos = aprinzi, apesi sus = stingi (si invers)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span></td>
+    <td>Perete pe palier</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>1 priza dubla: aspirator</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Tavan deasupra scarii</td>
+    <td><strong>~550 cm</strong> (de la parter!) sau 275cm (de la etaj)</td>
+    <td>Centrat pe casa scarii</td>
+    <td>LED 18W, lumina calda. ATENTIE: plafoniera e la inaltime mare daca e deschidere pe 2 nivele - prevede sistem de coborare sau acces pt intretinere</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICE</span> Perete scara</td>
+    <td>Peretele de-a lungul rampei, la fiecare 3-4 trepte</td>
+    <td><strong>180-200 cm</strong> de la treapta adiacenta</td>
+    <td>Distribuite uniform</td>
+    <td>2-3 aplice LED 5-8W, lumina calda. Iluminare de ambient/siguranta</td>
+</tr>
+</table>
+<div class="note"><strong>Acces pod:</strong> In holul etajului exista trapa acces pod (DESCHIDERE ACCES POD). Prevede o priza si un corp de iluminat in pod, cu intrerupator pe holul etajului.</div>
+</div>
+
+<!-- E.02 HOL ETAJ -->
+<div class="room" id="e02">
+<div class="room-header">
+    <span class="room-name">E.02 - Hol Etaj</span>
+    <span class="room-area">8.58 mp | ~3.30 x 2.60m (L) | Pardoseala: parchet</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Principal</td>
+    <td>La intrarea din casa scarii</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de colt/toc</td>
+    <td>Cap-scara daca holul e in forma de L (comutator la fiecare capat)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Pod</td>
+    <td>Langa trapa de acces pod</td>
+    <td><strong>110 cm</strong></td>
+    <td>Pe peretele cel mai aproape de trapa</td>
+    <td>Aprinde lumina in pod</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> 1</td>
+    <td>Perete liber</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Aspirator, nightlight</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> 2</td>
+    <td>Alt perete liber (capat opus al L-ului)</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Rezerva</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">TABLOU ELECTRIC</span> Etaj (optional)</td>
+    <td>Perete hol, zona discreta</td>
+    <td><strong>150-170 cm</strong></td>
+    <td>Min 70 cm spatiu liber in fata</td>
+    <td>Tablou secundar 18-24 module. Alimentat din tablou parter C18</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">TERMOSTAT</span></td>
+    <td>Perete interior hol</td>
+    <td><strong>150 cm</strong></td>
+    <td>Departe de usi, ferestre</td>
+    <td>Termostat incalzire pardoseala zona etaj</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA / SPOTURI</span></td>
+    <td>Tavan</td>
+    <td><strong>275 cm</strong></td>
+    <td>Distribuite pe forma L</td>
+    <td>2-3 spoturi LED 7W sau 1 plafoniera 18-24W. Lumina calda 3000K</td>
+</tr>
+</table>
+</div>
+
+<!-- E.03 DEPOZITARE ETAJ -->
+<div class="room" id="e03">
+<div class="room-header">
+    <span class="room-name">E.03 - Depozitare Etaj</span>
+    <span class="room-area">4.95 mp | ~2.25 x 2.20m | Pardoseala: parchet</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Exterior, pe hol, langa usa</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Simplu</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span></td>
+    <td>Perete lateral</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>1 priza dubla: aspirator, dezumidificator, fierul de calcat</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED 12W</td>
+</tr>
+</table>
+</div>
+
+<!-- E.04 DORMITOR 1 -->
+<div class="room" id="e04">
+<div class="room-header">
+    <span class="room-name">E.04 - Dormitor 1 (master?)</span>
+    <span class="room-area">17.77 mp | ~4.60 x 3.86m | Pardoseala: parchet | 2 ferestre (colt)</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Principal</td>
+    <td>Langa usa, partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Dublu sau triplu: lumina tavan + aplice pat. Cap-scara daca vrei control si de la pat</td>
+</tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Pat stanga</td>
+    <td>Perete langa pat, partea stanga</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>10-15 cm deasupra noptiera (noptiera ~50cm inaltime)</td>
+    <td>Cap-scara cu intrerupatorul de la usa. + intrerupator aplica noptiera</td>
+</tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Pat dreapta</td>
+    <td>Perete langa pat, partea dreapta</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>10-15 cm deasupra noptiera</td>
+    <td>Cap-scara cu intrerupatorul de la usa. + intrerupator aplica noptiera</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Noptiera stanga</td>
+    <td>Perete langa pat, stanga</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>Centrat pe noptiera</td>
+    <td>1 priza dubla (telefon, lampa, carte electronica). Recomandat: 1 USB integrat</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Noptiera dreapta</td>
+    <td>Perete langa pat, dreapta</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>Centrat pe noptiera</td>
+    <td>1 priza dubla + USB</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> TV (optional)</td>
+    <td>Peretele opus patului</td>
+    <td><strong>120 cm</strong> (TV perete)</td>
+    <td>Centrat pe perete</td>
+    <td>TV + media player. + priza antena/RJ45</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Birou/toaleta</td>
+    <td>Perete langa fereastra (zona luminoasa)</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Uscator par, stecher, incarcatoare</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete liber</td>
+    <td>Alt perete liber</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Aspirator, umidificator, aer conditionat portabil</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">PRIZA</span> Aer conditionat (pregatire)</td>
+    <td>Perete exterior, sus, zona unitate interioara AC</td>
+    <td><strong>230-240 cm</strong></td>
+    <td>La 15-20 cm sub tavan</td>
+    <td><strong>Trage cablu 3x2.5mm² + tub 32mm prin perete exterior</strong> chiar daca nu montezi AC acum. Costa nimic acum vs spart pereti mai tarziu</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA / LUSTRA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru geometric</td>
+    <td>LED 24-36W, dimabila, lumina calda 2700K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICE x2</span> Noptiere</td>
+    <td>Perete deasupra noptierelor, de o parte si alta a patului</td>
+    <td><strong>160-170 cm</strong></td>
+    <td>Centrat pe fiecare noptiera</td>
+    <td>Aplice LED 5-8W cu brat articulat. Alimentare din perete (doza in spatele aplicei)</td>
+</tr>
+</table>
+
+<div class="tip"><strong>Dormitor master - regula de aur:</strong> Trebuie sa poti stinge/aprinde lumina din pat FARA sa te ridici. Intrerupatoare cap-scara la usa SI la fiecare parte a patului. Comutare: usa -> stanga pat -> dreapta pat (3 puncte de comutare = 2 comutatoare cap-scara + 1 comutator cruce).</div>
+</div>
+
+<!-- E.05 BAIE 1 ETAJ -->
+<div class="room" id="e05">
+<div class="room-header">
+    <span class="room-name">E.05 - Baie 1 Etaj</span>
+    <span class="room-area">8.12 mp | ~2.95 x 2.75m | Pardoseala: gresie | Pereti: faianta</span>
+</div>
+
+<div class="warning"><strong>ZONA UMEDA!</strong> Circuit dedicat C10 pe RCBO 30mA. Toate prizele IP44. Legatura echipotentiala obligatorie!</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td><strong>IN EXTERIOR</strong>, pe hol, langa usa</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Dublu: plafoniera + aplica oglinda. Montat PE AFARA pe hol!</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span> Oglinda</td>
+    <td>Langa oglinda, Zona 3</td>
+    <td><strong>110-120 cm</strong></td>
+    <td><strong>Min 60 cm</strong> de cada/dus</td>
+    <td>IP44, cu capac. Uscator par, aparat ras</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span> Rezerva</td>
+    <td>Perete opus, Zona 3</td>
+    <td><strong>110 cm</strong></td>
+    <td>Min 60 cm de surse apa</td>
+    <td>IP44. Dezumidificator, incalzitor electric auxiliar</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA IP44</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>In afara Zonei 1</td>
+    <td>LED IP44, 18-24W, lumina neutra 4000K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICA OGLINDA</span></td>
+    <td>Deasupra oglinzii</td>
+    <td><strong>200 cm</strong></td>
+    <td>Centrat pe oglinda</td>
+    <td>LED IP44, 8-12W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">VENTILATOR</span></td>
+    <td>Perete exterior / tavan</td>
+    <td><strong>240-260 cm</strong></td>
+    <td>Opus usii</td>
+    <td>120mm cu timer. Conectat pe circuitul de lumina cu intarziere la oprire</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">BARA ECHIPOTENTIALA</span></td>
+    <td>Perete accesibil (in spatele WC sau sub lavoar)</td>
+    <td><strong>30 cm</strong></td>
+    <td>-</td>
+    <td>Conecteaza: tevi apa, cada, radiator la PE. Conductor 4mm² galben-verde</td>
+</tr>
+</table>
+</div>
+
+<!-- E.06 DORMITOR 2 -->
+<div class="room" id="e06">
+<div class="room-header">
+    <span class="room-name">E.06 - Dormitor 2</span>
+    <span class="room-area">15.34 mp | ~3.97 x 3.86m | Pardoseala: parchet | 2 ferestre (colt) | Acces balcon N</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Principal</td>
+    <td>Langa usa, partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Cap-scara cu intrerupatoare de la pat</td>
+</tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR x2</span> Pat</td>
+    <td>Perete, de fiecare parte a patului</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>Deasupra noptierelor</td>
+    <td>Cap-scara (3 puncte: usa + stanga + dreapta pat)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Noptiera stanga</td>
+    <td>Perete stanga pat</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>Centrat pe noptiera</td>
+    <td>Priza dubla + USB</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Noptiera dreapta</td>
+    <td>Perete dreapta pat</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>Centrat pe noptiera</td>
+    <td>Priza dubla + USB</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Birou/TV</td>
+    <td>Perete opus patului</td>
+    <td><strong>30 cm</strong> sau <strong>120 cm</strong></td>
+    <td>Centrat</td>
+    <td>TV/Birou copil. Priza dubla</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete liber</td>
+    <td>Perete cu fereastra sau perete lateral</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Aspirator, etc.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">PRIZA</span> AC (pregatire)</td>
+    <td>Perete exterior, sus</td>
+    <td><strong>230-240 cm</strong></td>
+    <td>15-20 cm sub tavan</td>
+    <td>Pregatire aer conditionat: cablu + tub prin perete</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED 24W, dimabila, 2700K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICE x2</span> Noptiere</td>
+    <td>Perete deasupra noptierelor</td>
+    <td><strong>160-170 cm</strong></td>
+    <td>Centrat pe noptiere</td>
+    <td>Aplice LED 5-8W cu brat articulat</td>
+</tr>
+</table>
+</div>
+
+<!-- E.07 DRESSING 1 -->
+<div class="room" id="e07">
+<div class="room-header">
+    <span class="room-name">E.07 - Dressing 1</span>
+    <span class="room-area">4.95 mp | ~2.25 x 2.20m | Pardoseala: parchet</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Langa usa, interior dressing</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Simplu. Poate fi cu senzor de miscare (se aprinde la deschiderea usii)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span></td>
+    <td>Perete liber</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>1 priza dubla: fierul de calcat, steamer, aspirator</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED 12-18W, lumina neutra 4000K (sa vezi culorile corect)</td>
+</tr>
+</table>
+</div>
+
+<!-- E.08 DORMITOR 3 -->
+<div class="room" id="e08">
+<div class="room-header">
+    <span class="room-name">E.08 - Dormitor 3</span>
+    <span class="room-area">16.05 mp | ~4.15 x 3.86m | Pardoseala: parchet | Acces Baie 2 (en-suite) + Balcon S</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span> Principal</td>
+    <td>Langa usa de acces (din dressing/hol), partea manerului</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Cap-scara cu intrerupatoare pat</td>
+</tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR x2</span> Pat</td>
+    <td>Perete, de fiecare parte a patului</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>Deasupra noptierelor</td>
+    <td>Cap-scara 3 puncte. + intrerupator aplice noptiera</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Noptiera stanga</td>
+    <td>Perete stanga pat</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>Centrat pe noptiera</td>
+    <td>Priza dubla + USB</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> Noptiera dreapta</td>
+    <td>Perete dreapta pat</td>
+    <td><strong>60-70 cm</strong></td>
+    <td>Centrat pe noptiera</td>
+    <td>Priza dubla + USB</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA x2</span> TV/Birou</td>
+    <td>Perete opus patului</td>
+    <td><strong>30 cm</strong> sau <strong>120 cm</strong></td>
+    <td>Centrat</td>
+    <td>Priza dubla</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> Perete liber</td>
+    <td>Perete lateral</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Aspirator</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">PRIZA</span> AC (pregatire)</td>
+    <td>Perete exterior, sus</td>
+    <td><strong>230-240 cm</strong></td>
+    <td>15-20 cm sub tavan</td>
+    <td>Pregatire AC: cablu + tub</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED 24W, dimabila, 2700K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICE x2</span></td>
+    <td>Deasupra noptierelor</td>
+    <td><strong>160-170 cm</strong></td>
+    <td>Centrat pe noptiere</td>
+    <td>Aplice LED 5-8W</td>
+</tr>
+</table>
+</div>
+
+<!-- E.09 DRESSING 2 -->
+<div class="room" id="e09">
+<div class="room-header">
+    <span class="room-name">E.09 - Dressing 2</span>
+    <span class="room-area">7.00 mp | ~2.80 x 2.50m | Pardoseala: parchet</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Langa usa, interior</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Simplu sau cu senzor miscare</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> 1</td>
+    <td>Perete lateral</td>
+    <td><strong>30 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Fier de calcat, steamer</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA</span> 2</td>
+    <td>Alt perete</td>
+    <td><strong>110 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>Steamer (la inaltime de utilizare), oglinda cu LED</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>Centru</td>
+    <td>LED 18W, lumina neutra 4000K</td>
+</tr>
+</table>
+</div>
+
+<!-- E.10 BAIE 2 -->
+<div class="room" id="e10">
+<div class="room-header">
+    <span class="room-name">E.10 - Baie 2 Etaj (en-suite Dormitor 3)</span>
+    <span class="room-area">8.34 mp | ~3.05 x 2.73m | Pardoseala: gresie | Pereti: faianta</span>
+</div>
+
+<div class="warning"><strong>ZONA UMEDA!</strong> Circuit dedicat C11 pe RCBO 30mA. Toate prizele IP44. Legatura echipotentiala obligatorie!</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie (perete)</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td><strong>IN EXTERIOR</strong>, in dormitor, langa usa baii</td>
+    <td><strong>110 cm</strong></td>
+    <td>15-20 cm de toc</td>
+    <td>Dublu: plafoniera + aplica oglinda. PE AFARA!</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span> Oglinda</td>
+    <td>Langa oglinda, Zona 3</td>
+    <td><strong>110-120 cm</strong></td>
+    <td>Min 60 cm de cada/dus</td>
+    <td>IP44, cu capac</td>
+</tr>
+<tr>
+    <td><span class="badge badge-priza">PRIZA IP44</span> Rezerva</td>
+    <td>Perete opus, Zona 3</td>
+    <td><strong>110 cm</strong></td>
+    <td>Min 60 cm de surse apa</td>
+    <td>IP44. Dezumidificator</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA IP44</span></td>
+    <td>Centrul tavanului</td>
+    <td><strong>275 cm</strong></td>
+    <td>In afara Zonei 1</td>
+    <td>LED IP44, 18-24W, 4000K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICA OGLINDA</span></td>
+    <td>Deasupra oglinzii</td>
+    <td><strong>200 cm</strong></td>
+    <td>Centrat pe oglinda</td>
+    <td>LED IP44, 8-12W</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">VENTILATOR</span></td>
+    <td>Perete exterior / tavan</td>
+    <td><strong>240-260 cm</strong></td>
+    <td>Opus usii</td>
+    <td>120mm cu timer</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">BARA ECHIPOTENTIALA</span></td>
+    <td>Perete accesibil</td>
+    <td><strong>30 cm</strong></td>
+    <td>-</td>
+    <td>Legatura echipotentiala: tevi, cada, radiator -> PE</td>
+</tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<!-- EXTERIOR -->
+<!-- ============================================================ -->
+<h2 id="ext">EXTERIOR (Terasa, Balcoane, Acces)</h2>
+
+<div class="room">
+<div class="room-header">
+    <span class="room-name">Terasa Acoperita (Parter)</span>
+    <span class="room-area">25.20 mp | Pardoseala: gresie antiderapanta exterior</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Interior casa, langa usa spre terasa</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Dublu: lumina terasa + lumina perete exterior. Montat in INTERIOR</td>
+</tr>
+<tr>
+    <td><span class="badge badge-exterior">PRIZA IP55</span> 1</td>
+    <td>Perete exterior, zona gratar/masa</td>
+    <td><strong>40-50 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>IP55 cu capac. Gratar electric, prelungitor lumini, incalzitor terasa</td>
+</tr>
+<tr>
+    <td><span class="badge badge-exterior">PRIZA IP55</span> 2</td>
+    <td>Celalalt capat al terasei</td>
+    <td><strong>40-50 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>IP55 cu capac. Aspirator, scule</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICE PERETE</span></td>
+    <td>Perete exterior casa, distribuite la 2-3m</td>
+    <td><strong>200-220 cm</strong></td>
+    <td>Distribuite uniform pe peretele casei</td>
+    <td>2-3 aplice LED IP65, 10W fiecare, lumina calda 2700K</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PLAFONIERA IP65</span></td>
+    <td>Tavanul terasei, centru</td>
+    <td><strong>Tavan terasa</strong></td>
+    <td>Centrat</td>
+    <td>LED IP65, 24W. Sau spoturi incastrate IP65</td>
+</tr>
+</table>
+</div>
+
+<div class="room">
+<div class="room-header">
+    <span class="room-name">Acces Principal (Intrare)</span>
+    <span class="room-area">5.17 mp</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Interior hol (P.01), langa usa</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Controleaza lumina exterioara de la intrare. Cap-scara cu buton exterior (optional)</td>
+</tr>
+<tr>
+    <td><span class="badge badge-exterior">PRIZA IP55</span></td>
+    <td>Perete exterior, langa usa</td>
+    <td><strong>40-50 cm</strong></td>
+    <td>Min 30 cm de usa</td>
+    <td>IP55. Brad Craciun, aspirator auto, etc.</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICA IP65</span></td>
+    <td>Deasupra usii de intrare</td>
+    <td><strong>220-240 cm</strong></td>
+    <td>Centrat pe usa</td>
+    <td>LED IP65, 12W. Cu senzor crepuscular sau de miscare</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">INTERFON / VIDEOINTERFON</span></td>
+    <td>Perete exterior, langa usa intrare</td>
+    <td><strong>140-150 cm</strong></td>
+    <td>Lateral usa, 15-20 cm</td>
+    <td>Alimentare 12/24V din transformator interior. Cablu 2x0.75mm² + cablu date</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">SONERIE</span></td>
+    <td>Interior hol, deasupra usii</td>
+    <td><strong>220 cm</strong></td>
+    <td>Deasupra usii de intrare</td>
+    <td>Alimentare din transformator sonerie 8-12V</td>
+</tr>
+</table>
+</div>
+
+<div class="room">
+<div class="room-header">
+    <span class="room-name">Balcon Nord (Etaj - acces din Dormitor 2)</span>
+    <span class="room-area">4.73 mp | ~3.45 x 1.37m</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Interior dormitor, langa usa balcon</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Simplu, in interior</td>
+</tr>
+<tr>
+    <td><span class="badge badge-exterior">PRIZA IP55</span></td>
+    <td>Perete exterior, pe balcon</td>
+    <td><strong>40 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>IP55. Lumini decorative, incarcator</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICA IP65</span></td>
+    <td>Perete exterior, deasupra usii balcon</td>
+    <td><strong>200-220 cm</strong></td>
+    <td>Centrat pe balcon</td>
+    <td>LED IP65, 8-10W, lumina calda</td>
+</tr>
+</table>
+</div>
+
+<div class="room">
+<div class="room-header">
+    <span class="room-name">Balcon Sud (Etaj - acces din Dormitor 3 / Dressing 2)</span>
+    <span class="room-area">7.92 mp | ~5.41 x 1.46m</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Interior, langa usa balcon</td>
+    <td><strong>110 cm</strong></td>
+    <td>15 cm de toc</td>
+    <td>Simplu, in interior</td>
+</tr>
+<tr>
+    <td><span class="badge badge-exterior">PRIZA IP55</span> 1</td>
+    <td>Perete exterior, un capat al balconului</td>
+    <td><strong>40 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>IP55. Balcon mare - merita 2 prize</td>
+</tr>
+<tr>
+    <td><span class="badge badge-exterior">PRIZA IP55</span> 2</td>
+    <td>Celalalt capat al balconului</td>
+    <td><strong>40 cm</strong></td>
+    <td>Min 15 cm de colt</td>
+    <td>IP55</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">APLICE IP65 x2</span></td>
+    <td>Perete exterior, distribuite pe lungime</td>
+    <td><strong>200-220 cm</strong></td>
+    <td>La 1/3 si 2/3 din lungime</td>
+    <td>2x LED IP65, 8W fiecare. Balcon 5.4m lung, necesita 2 puncte de lumina</td>
+</tr>
+</table>
+</div>
+
+<div class="room">
+<div class="room-header">
+    <span class="room-name">Iluminat Exterior Perimetral + Curte</span>
+    <span class="room-area">Teren: 812 mp</span>
+</div>
+
+<table>
+<tr><th>Element</th><th>Pozitie</th><th>Inaltime</th><th>Distanta de referinta</th><th>Detalii</th></tr>
+<tr>
+    <td><span class="badge badge-intrerupator">INTRERUPATOR</span></td>
+    <td>Interior (hol parter sau tablou)</td>
+    <td><strong>110 cm</strong></td>
+    <td>-</td>
+    <td>Control iluminat curte. Recomandat: cu timer sau senzor crepuscular</td>
+</tr>
+<tr>
+    <td><span class="badge badge-exterior">PRIZA IP55</span> Fatada</td>
+    <td>Perete exterior, fiecare fatada</td>
+    <td><strong>40-50 cm</strong></td>
+    <td>Cate 1 pe fiecare fatada</td>
+    <td>4 prize IP55 (una pe fiecare latura casei). Masina tuns iarba, spalator presiune</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">PROIECTOARE</span></td>
+    <td>Sub streasina, colturile casei</td>
+    <td><strong>~280-300 cm</strong></td>
+    <td>La colturile casei</td>
+    <td>2-4 proiectoare LED IP65, 20W, cu senzor miscare. Iluminat securitate</td>
+</tr>
+<tr>
+    <td><span class="badge badge-lumina">STALPISORI CURTE</span></td>
+    <td>De-a lungul aleii pietonale</td>
+    <td><strong>40-60 cm</strong></td>
+    <td>La fiecare 3-4m pe alee</td>
+    <td>Stalpisori LED IP65, 3-5W fiecare. Cablu subteran CYABY 3x1.5mm² in tub PVC</td>
+</tr>
+<tr>
+    <td><span class="badge badge-special">POARTA / INTERFON</span></td>
+    <td>Poarta de intrare de pe str. XIV</td>
+    <td><strong>140-150 cm</strong></td>
+    <td>Pe stalpul portii</td>
+    <td>Videointerfon exterior IP65 + yala electrica. Cablu din casa: 2x0.75 + coaxial/UTP</td>
+</tr>
+</table>
+
+<div class="tip"><strong>Cabluri subterane curte:</strong> Trage tuburi PVC rigide (nu copex!) inainte de amenajarea curtii: de la casa spre poarta (interfon + iluminat + motor poarta), de la casa spre gradina (iluminat + priza), de la casa spre garaj (daca e separat). Adancime minim 60cm. Banda de avertizare la 20cm deasupra.</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SUMAR -->
+<!-- ============================================================ -->
+<h2>Sumar Cantitativ</h2>
+
+<div class="room">
+<div class="grid-2">
+<div>
+<h3>PARTER</h3>
+<table>
+    <tr><th>Camera</th><th>Prize</th><th>Intrerupatoare</th><th>Lumini</th></tr>
+    <tr><td>P.01 Hol</td><td>2</td><td>1</td><td>1</td></tr>
+    <tr><td>P.02 Birou</td><td>6</td><td>1</td><td>1</td></tr>
+    <tr><td>P.03 Baie+Spal</td><td>4</td><td>1 (ext)</td><td>2 + ventilator</td></tr>
+    <tr><td>P.04 Hol2</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>P.05 Depozitare</td><td>1</td><td>1 (ext)</td><td>1</td></tr>
+    <tr><td>P.06 Camara</td><td>2</td><td>1</td><td>1</td></tr>
+    <tr><td>P.07 Bucatarie</td><td>12-14</td><td>1-2</td><td>2</td></tr>
+    <tr><td>P.08 Living+Dining</td><td>10-12</td><td>2</td><td>2</td></tr>
+    <tr><td>P.09 WC</td><td>1</td><td>1 (ext)</td><td>2 + ventilator</td></tr>
+    <tr><td>P.10 Garaj</td><td>5-6</td><td>2</td><td>2</td></tr>
+    <tr><td><strong>TOTAL PARTER</strong></td><td><strong>~46-50</strong></td><td><strong>~12-14</strong></td><td><strong>~16-18</strong></td></tr>
+</table>
+</div>
+<div>
+<h3>ETAJ</h3>
+<table>
+    <tr><th>Camera</th><th>Prize</th><th>Intrerupatoare</th><th>Lumini</th></tr>
+    <tr><td>E.01 Scara</td><td>1</td><td>1</td><td>2-4</td></tr>
+    <tr><td>E.02 Hol</td><td>2</td><td>2</td><td>2-3</td></tr>
+    <tr><td>E.03 Depozitare</td><td>1</td><td>1 (ext)</td><td>1</td></tr>
+    <tr><td>E.04 Dormitor1</td><td>8-10</td><td>3</td><td>3</td></tr>
+    <tr><td>E.05 Baie1</td><td>2</td><td>1 (ext)</td><td>2 + ventilator</td></tr>
+    <tr><td>E.06 Dormitor2</td><td>7-8</td><td>3</td><td>3</td></tr>
+    <tr><td>E.07 Dressing1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>E.08 Dormitor3</td><td>7-8</td><td>3</td><td>3</td></tr>
+    <tr><td>E.09 Dressing2</td><td>2</td><td>1</td><td>1</td></tr>
+    <tr><td>E.10 Baie2</td><td>2</td><td>1 (ext)</td><td>2 + ventilator</td></tr>
+    <tr><td><strong>TOTAL ETAJ</strong></td><td><strong>~33-36</strong></td><td><strong>~17-18</strong></td><td><strong>~21-25</strong></td></tr>
+</table>
+</div>
+</div>
+
+<h3>EXTERIOR</h3>
+<table>
+    <tr><th>Zona</th><th>Prize IP55</th><th>Intrerupatoare</th><th>Lumini IP65</th></tr>
+    <tr><td>Terasa acoperita</td><td>2</td><td>1</td><td>3-4</td></tr>
+    <tr><td>Acces intrare</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>Balcon Nord</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>Balcon Sud</td><td>2</td><td>1</td><td>2</td></tr>
+    <tr><td>Perimetru curte</td><td>4</td><td>1</td><td>4-8</td></tr>
+    <tr><td><strong>TOTAL EXTERIOR</strong></td><td><strong>~10</strong></td><td><strong>~5</strong></td><td><strong>~11-16</strong></td></tr>
+</table>
+
+<h3 style="margin-top:20px; color: var(--red);">TOTAL CASA: ~90-96 prize | ~34-37 intrerupatoare | ~48-59 puncte de lumina</h3>
+</div>
+
+<!-- ============================================================ -->
+<!-- RECOMANDARI FINALE -->
+<!-- ============================================================ -->
+<h2>Recomandari Finale</h2>
+
+<div class="room">
+<h3>Cabluri si materiale</h3>
+<table>
+    <tr><th>Utilizare</th><th>Cablu recomandat</th><th>Sectiune</th></tr>
+    <tr><td>Iluminat</td><td>NYM-J (CYY-F)</td><td>3x1.5 mm²</td></tr>
+    <tr><td>Prize generale</td><td>NYM-J (CYY-F)</td><td>3x2.5 mm²</td></tr>
+    <tr><td>Cuptor electric</td><td>NYM-J</td><td>3x4 mm²</td></tr>
+    <tr><td>Plita inductie</td><td>NYM-J</td><td>5x6 mm² (trifazat) sau 3x6 mm²</td></tr>
+    <tr><td>Alimentare tablou etaj</td><td>NYM-J</td><td>3x6 mm²</td></tr>
+    <tr><td>Alimentare tablou principal</td><td>NYM-J</td><td>3x10 mm² (de la contor)</td></tr>
+    <tr><td>Statie incarcare EV (viitor)</td><td>NYM-J</td><td>5x6 mm² (pregatire trifazat)</td></tr>
+    <tr><td>Iluminat exterior subteran</td><td>CYABY</td><td>3x1.5 mm² in tub PVC</td></tr>
+    <tr><td>Interfon / Sonerie</td><td>Cablu interfon</td><td>2x0.75 + coaxial sau UTP Cat5e</td></tr>
+    <tr><td>Date / Internet</td><td>UTP Cat6A</td><td>Cate 1-2 pe camera principala</td></tr>
+</table>
+
+<h3>Trasee cabluri in pereti</h3>
+<div class="note">
+<strong>Regula traseelor:</strong> Cablurile se monteaza NUMAI vertical si orizontal (nu diagonal!):
+<br>- <strong>Vertical:</strong> de la priza/intrerupator drept in sus pana la tavan, sau drept in jos pana la podea
+<br>- <strong>Orizontal:</strong> la 30 cm sub tavan SAU la 30 cm deasupra pardoselei
+<br>- La intersectii: cablurile se incruciseaza la 90 de grade
+<br>- Aceasta regula permite gasirea cablurilor ulterior (de ex. la montare mobila cu burghiul)
+</div>
+
+<h3>Pregatiri pentru viitor (trage acum, foloseste mai tarziu)</h3>
+<table>
+    <tr><th>Pregatire</th><th>De unde -> Unde</th><th>Ce tragi</th></tr>
+    <tr><td>Aer conditionat x3</td><td>Tablou -> perete exterior dormitoare</td><td>3x2.5mm² + tub 32mm prin perete exterior</td></tr>
+    <tr><td>Aer conditionat living</td><td>Tablou -> perete exterior living</td><td>3x2.5mm² + tub 32mm prin perete exterior</td></tr>
+    <tr><td>Statie incarcare EV</td><td>Tablou -> garaj</td><td>5x6mm² in tub 32mm</td></tr>
+    <tr><td>Panouri fotovoltaice</td><td>Tablou -> pod/acoperis (orientare sud)</td><td>Tub gol 40mm pana in pod</td></tr>
+    <tr><td>Smart home / KNX</td><td>Tablou -> fiecare camera</td><td>Cablu bus 2x2x0.8mm² (optional, pt automatizari)</td></tr>
+    <tr><td>Camera supraveghere</td><td>Router/NVR -> 4 colturi casa</td><td>UTP Cat6 + tub PVC exterior, alimentare PoE</td></tr>
+    <tr><td>Poarta electrica</td><td>Casa -> stalp poarta</td><td>3x1.5mm² + UTP in tub subteran</td></tr>
+</table>
+
+<div class="warning"><strong>INCALZIRE IN PARDOSEALA:</strong> Atentie la trasarea cablurilor in sapa! Pe ambele niveluri exista sistem de incalzire in pardoseala. Cablurile electrice care trec prin sapa trebuie protejate in tub PVC rigid si trebuie coordonate cu traseele tevilor de incalzire. Stabileste traseele electrice INAINTE de turnarea sapei!</div>
+</div>
+
+<hr class="separator">
+<p style="color: var(--muted); text-align: center; font-size: 0.85em; margin-top: 20px;">
+    Plan electric generat pe baza proiectului de arhitectura nr. 38/2024 | AIM Architecture & Interior Design S.R.L.<br>
+    Acest plan este orientativ si trebuie validat de un electrician autorizat ANRE.<br>
+    Normative de referinta: NTE 007, I7-2011, IEC 60364, NP-061-02, P118<br>
+    <a href="#top" style="color: var(--accent);">&#8593; Inapoi sus</a>
+</p>
+
+</body>
+</html>
